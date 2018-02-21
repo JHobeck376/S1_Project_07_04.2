@@ -51,18 +51,17 @@ function verifyAcres() {
 
 /* verify at least one crops checkbox is checked */
 function verifyCrops() {
-  //The below 16 lines of code were provided and come with a bug. it is supposed to display a message and a recommendation, though because of the bug, nothing is supposed to appear, as indicated by the second project.
     try {
       for (var i = 0; i < 7; i++) {
-        if(cropsFieldset.getElementsByTagName("input")[i]. checked){
+        if(cropsFieldset.getElementsByTagName("input")[i].checked){
           cropsComplete = true;
-          messageElement = ""; //clear previous message or recommendation
+          messageElement.innerHTML = ""; //clear previous message or recommendation
           testFormCompleteness();
           i = 8;
-      }if (i === 7){
+        }
+      }if (i === 7) {
         throw "Please select at least one crop.";
       }
-    }
     }catch(message) {
       cropsComplete = false;
       messageElement.innerHTML = ""; //remove any former recommendation heading
@@ -75,15 +74,15 @@ function verifyMonths() {
   var validity = true;
   var messageText = "";
   try {
-    if (!(monthsBox.value >= 1 && monthsBox.values <= 12)) {
-      throw "Please enter a number of months between 1 and 12."
+    if(!(monthsBox.value >= 1 && monthsBox.value <= 12)) {
+      throw "Please enter a number of months between 1 and 12.";
     }
   } catch (message) {
     validity = false;
     messageText = message;
     monthsBox.value = "";
   }finally{
-    acresComplete = validity;
+    monthsComplete = validity;
     messageElement.innerHTML = messageText;
     messageHeadElement.innerHTML = "";
     testFormCompleteness();
@@ -105,7 +104,7 @@ function testFormCompleteness() {
 /* generate tractor recommendation based on user selections */
 function createRecommendation() {
     if (acresBox.value <= 5000) { // 5000 acres or less, no crop test needed
-        if (monthsBox.value = 10) { // 10+ months of farming per year
+        if (monthsBox.value >= 10) { // 10+ months of farming per year
             messageHeadElement.innerHTML = "E3250";
             messageElement.innerHTML = "A workhorse for a small farm or a big backyard. A medium- to heavy-duty tractor that can haul whatever you throw at it year-round.";
         } else { // 9 or fewer months per year
